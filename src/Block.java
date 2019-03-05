@@ -44,7 +44,7 @@ public class Block {
     }
 
     // to calculate the hash of current block.
-    private byte[] calculateHash() {
+    public byte[] calculateHash() {
         byte[] hash = null;
 
         try {
