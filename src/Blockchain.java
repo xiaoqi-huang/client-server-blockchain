@@ -12,10 +12,12 @@ public class Blockchain {
         length = 0;
     }
 
-    // getters and setters
+    // Getters
     public Block getHead() { return head; }
     public ArrayList<Transaction> getPool() { return pool; }
     public int getLength() { return length; }
+
+    // Setters
     public void setHead(Block head) { this.head = head; }
     public void setPool(ArrayList<Transaction> pool) { this.pool = pool; }
     public void setLength(int length) { this.length = length; }
@@ -37,22 +39,8 @@ public class Blockchain {
         if (pool.size() < poolLimit) {
             return 1;
         } else {
-            // Builds a new block
-            Block block = new Block();
-            if (length == 0) {
-                block.setPreviousBlock(null);
-                block.setPreviousHash(new byte[32]);
-            } else {
-                block.setPreviousBlock(head);
-                block.setPreviousHash(head.calculateHash());
-            }
-            block.setTransactions(pool);
-
-            // Updates head, pool and length
-            head = block;
-            pool = new ArrayList<>();
-            length++;
-
+            // Commits all transactions in the pool to a new block
+            commitTransactions();
             return 2;
         }
     }
@@ -78,8 +66,12 @@ public class Blockchain {
                 + blockString;
     }
 
-    // implement helper functions here if you need any.
-    public Transaction createTransaction(String txString) {
+
+    /* *****************************************************************************************************************
+     *  Helper Functions
+     * ***************************************************************************************************************** */
+
+    private Transaction createTransaction(String txString) {
         String[] tokens = txString.split("\\|");
 
         if (tokens.length == 3
@@ -93,5 +85,36 @@ public class Blockchain {
         } else {
             return null;
         }
+    }
+
+    private Block createBlock() {
+        Block block = new Block();
+        if (length == 0) {
+            block.setPreviousBlock(null);
+            block.setPreviousHash(new byte[32]);
+        } else {
+            block.setPreviousBlock(head);
+            block.setPreviousHash(head.calculateHash());
+        }
+        block.setTransactions(pool);
+
+        return block;
+    }
+
+    /**
+     * This function commits all uncommitted transactions in the pool to a new block.
+     * Head is set to the newly created block.
+     * Pool is reset.
+     * Length is increased by 1.
+     */
+    private void commitTransactions() {
+        // Builds a new block, makes the head point to the new block
+        head = createBlock();
+
+        // Resets the pool
+        pool = new ArrayList<>();
+
+        // Increase the length
+        length++;
     }
 }
