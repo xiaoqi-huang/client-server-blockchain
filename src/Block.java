@@ -65,7 +65,7 @@ public class Block {
             byte[] bytes = baos.toByteArray();
             hash = digest.digest(bytes);
         } catch (NoSuchAlgorithmException | IOException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            e.printStackTrace();
         }
 
         return hash;
