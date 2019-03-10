@@ -60,8 +60,8 @@ public class BlockchainServer {
 
         // Reads requests and gives responses
         try {
-            String request = inputReader.readLine();
-            while (request != null) {
+            String request;
+            while ((request  = inputReader.readLine()) != null) {
                 String response = handleRequest(request);
                 if (response.equals("close")) {
                     clientInputStream.close();
@@ -71,8 +71,6 @@ public class BlockchainServer {
                     outWriter.print(response);
                     outWriter.flush();
                 }
-                // Reads a new line from the input stream
-                request = inputReader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,15 +90,14 @@ public class BlockchainServer {
             return "Error\n\n";
         }
 
-        String type = request.substring(0, 2);
-        if (type.equals("tx")) {
+        if (request.matches("tx\\|.*\\|.*")) {
             int result = blockchain.addTransaction(request);
             return result != 0 ? "Accepted\n\n" : "Rejected\n\n";
         }
-        if (type.equals("pb")) {
+        if (request.equals("pb")) {
             return blockchain.toString() + "\n";
         }
-        if (type.equals("cc")) {
+        if (request.equals("cc")) {
             return "close";
         }
 
