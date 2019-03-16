@@ -1,9 +1,12 @@
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Scanner;
 
+/**
+ * This blockchain client can create a socket to connect to the specific server and port number.
+ * It listens to user inputs, forwards user requests to the server,
+ * and then print all server replies on the screen.
+ */
 public class BlockchainClient {
 
     public static void main(String[] args) {
@@ -23,13 +26,20 @@ public class BlockchainClient {
         }
     }
 
+    /**
+     * This method reads requests from the user and send them to the server.
+     * Also, it receives responses from the server and print them.
+     * This method stops if the gieven request is "cc".
+     * @param serverInputStream is the stream where the client can read responses from the server.
+     * @param serverOutputStream is the stream where the client can write user requests to the server.
+     */
     public void clientHandler(InputStream serverInputStream, OutputStream serverOutputStream) {
         // Wrap the input stream and the output stream
         BufferedReader inputReader = new BufferedReader(
                 new InputStreamReader(serverInputStream));
         PrintWriter outWriter = new PrintWriter(serverOutputStream, true);
 
-        // Read requests from the user
+        // Listen requests from the user
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
             String request = sc.nextLine();

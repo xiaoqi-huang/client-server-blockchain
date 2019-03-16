@@ -2,6 +2,9 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * This blockchain server keeps listening to a specific port and interacts with user requests.
+ */
 public class BlockchainServer {
 
     private Blockchain blockchain;

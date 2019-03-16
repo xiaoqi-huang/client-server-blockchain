@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * A blockchain contains the blockchain itself to store committed transactions and a pool to store uncommitted transactions.
+ */
 public class Blockchain {
     private Block head;
     private ArrayList<Transaction> pool;
@@ -39,7 +42,7 @@ public class Blockchain {
         if (pool.size() < poolLimit) {
             return 1;
         } else {
-            // Commits all transactions in the pool to a new block
+            // Commit all transactions in the pool to a new block
             commitTransactions();
             return 2;
         }
@@ -71,6 +74,11 @@ public class Blockchain {
      *  Helper Functions
      * ***************************************************************************************************************** */
 
+    /**
+     * This method converts a valid transaction string to a new transaction object.
+     * @param txString is in tx|<sender>|<content> format.
+     * @return a new transaction.
+     */
     private Transaction createTransaction(String txString) {
         String[] tokens = txString.split("\\|");
 
@@ -87,6 +95,10 @@ public class Blockchain {
         }
     }
 
+    /**
+     * This method creates a new block containing all transactions in the pool.
+     * @return a new block.
+     */
     private Block createBlock() {
         Block block = new Block();
         if (length == 0) {

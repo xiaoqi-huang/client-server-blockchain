@@ -1,3 +1,6 @@
+/**
+ * A transaction is defined as the container to store a single message (sender + content).
+ */
 public class Transaction {
     private String sender;
     private String content;
