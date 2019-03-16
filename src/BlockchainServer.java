@@ -40,6 +40,7 @@ public class BlockchainServer {
                 client.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                break;
             }
         }
     }
@@ -63,9 +64,9 @@ public class BlockchainServer {
             String request;
             while ((request  = inputReader.readLine()) != null) {
                 String response = handleRequest(request);
-                if (response.equals("close")) {
-                    clientInputStream.close();
-                    clientOutputStream.close();
+                if (response.equals("cc")) {
+                    inputReader.close();
+                    outWriter.close();
                     break;
                 } else {
                     outWriter.print(response);
@@ -98,7 +99,7 @@ public class BlockchainServer {
             return blockchain.toString() + "\n";
         }
         if (request.equals("cc")) {
-            return "close";
+            return "cc";
         }
 
         // Unrecognized request
