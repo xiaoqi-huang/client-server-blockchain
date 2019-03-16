@@ -63,14 +63,11 @@ public class BlockchainClient {
             try {
                 String response;
 
-                // Wait until the reader is ready
-                while (true) {
-                    if (inputReader.ready()) break;
-                }
-
                 // Read and print responses until there is nothing to read
-                while (inputReader.ready() && (response = inputReader.readLine()) != null) {
+                while ((response = inputReader.readLine()) != null) {
                     System.out.println(response);
+                    // Stop reading responses once there is nothing to read
+                    if (!inputReader.ready()) break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
