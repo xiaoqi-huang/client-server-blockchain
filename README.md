@@ -1,4 +1,4 @@
-# Client-Server (CS) Blockchain
+# COMP3221 Client-Server (CS) Blockchain
 
 ## Requests
 
